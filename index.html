@@ -13,7 +13,15 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
     body { background: #f2f4f7; padding:20px; }
-    .app { max-width: 400px; margin:auto; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
+
+    /* Login Page */
+    .login { max-width: 400px; margin:auto; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); padding:30px; text-align:center; }
+    .login h2 { margin-bottom:20px; color:#0a7cff; }
+    .login input { width:80%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc; font-size:16px; }
+    .login button { width:84%; padding:12px; background:#0a7cff; color:#fff; border:none; border-radius:8px; font-size:16px; cursor:pointer; margin-top:10px; }
+    
+    /* Dashboard */
+    .app { display:none; max-width: 400px; margin:auto; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
     .header { background:#0a7cff; color:#fff; padding:20px; }
     .header h2 { font-size:18px; font-weight:normal; }
     .balance { margin-top:15px; font-size:28px; font-weight:bold; }
@@ -32,7 +40,17 @@
 </head>
 
 <body>
-  <div class="app">
+
+  <!-- LOGIN SCREEN -->
+  <div class="login" id="loginPage">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="pin" placeholder="PIN">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="app" id="dashboard">
 
     <!-- Header / Balance Card -->
     <div class="header">
@@ -68,28 +86,47 @@
 
   </div>
 
-  <!-- JavaScript -->
+  <!-- JS -->
   <script>
-    // Starting balance
+    // Hardcoded login credentials (demo)
+    const DEMO_USERNAME = "fukstudent";
+    const DEMO_PIN = "12345678";
+
+    // Elements
+    const loginPage = document.getElementById("loginPage");
+    const dashboard = document.getElementById("dashboard");
+
+    // Login function
+    function login() {
+      const user = document.getElementById("username").value;
+      const pin = document.getElementById("pin").value;
+
+      if(user === DEMO_USERNAME && pin === DEMO_PIN) {
+        alert("Login successful!");
+        loginPage.style.display = "none";
+        dashboard.style.display = "block";
+      } else {
+        alert("Incorrect username or PIN");
+      }
+    }
+
+    // Dashboard JS
     let balance = 125450;
 
-    // Update balance display
     function updateBalance() {
       document.querySelector('.balance').innerText = `₦${balance.toLocaleString()}`;
     }
 
-    // Add a transaction
     function addTransaction(name, amount, type='debit') {
       const txList = document.querySelector('.transactions');
       const div = document.createElement('div');
       div.className = 'transaction';
-      div.innerHTML = `<div class="left">${name}</div><div class="right ${type}">${type === 'credit' ? '+' : '-'} ₦${amount.toLocaleString()}</div>`;
+      div.innerHTML = `<div class="left">${name}</div><div class="right ${type}">${type==='credit' ? '+' : '-'} ₦${amount.toLocaleString()}</div>`;
       txList.appendChild(div);
     }
 
-    // Perform debit tasks (Transfer, VTU, Airtime, Bills)
     function performTask(name, amount) {
-      if(balance >= amount) {
+      if(balance >= amount){
         balance -= amount;
         updateBalance();
         addTransaction(name, amount, 'debit');
@@ -99,21 +136,19 @@
       }
     }
 
-    // Credit wallet
-    function creditWallet(amount) {
+    function creditWallet(amount){
       balance += amount;
       updateBalance();
       addTransaction('Wallet Funding', amount, 'credit');
       alert(`Wallet funded! ₦${amount.toLocaleString()} added.`);
     }
 
-    // Register service worker for PWA
-    if ("serviceWorker" in navigator) {
+    updateBalance();
+
+    // PWA Service Worker
+    if("serviceWorker" in navigator){
       navigator.serviceWorker.register("service-worker.js");
     }
-
-    // Initial balance display
-    updateBalance();
   </script>
 
 </body>
