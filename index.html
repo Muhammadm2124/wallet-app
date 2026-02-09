@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet App</title>
+
+  <!-- PWA SETTINGS -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a7cff">
+</head>
+
+<body>
+
+  <h1>My Wallet App</h1>
+  <p>App is working.</p>
+
+  <!-- SERVICE WORKER -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+
+</body>
+</html>
