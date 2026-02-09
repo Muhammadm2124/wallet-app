@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+  body { background: #f2f4f7; padding:20px; }
+  .app { max-width: 400px; margin:auto; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
+  .header { background:#0a7cff; color:#fff; padding:20px; }
+  .header h2 { font-size:18px; font-weight:normal; }
+  .balance { margin-top:15px; font-size:28px; font-weight:bold; }
+  .actions { display:flex; justify-content:space-between; padding:15px; background:#f9fafb; flex-wrap:wrap; }
+  .action { width:48%; margin-bottom:10px; background:#fff; border-radius:12px; padding:12px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.08); font-size:13px; cursor:pointer; }
+  .action span { display:block; margin-top:8px; font-weight:bold; }
+  .transactions { padding:15px; }
+  .transactions h3 { font-size:16px; margin-bottom:10px; }
+  .transaction { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #eee; }
+  .transaction:last-child { border-bottom:none; }
+  .transaction .left { font-size:14px; }
+  .transaction .right { font-size:14px; font-weight:bold; }
+  .credit { color:green; }
+  .debit { color:red; }
+</style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wallet App</title>
@@ -12,8 +31,61 @@
 
 <body>
 
-  <h1>My Wallet App</h1>
-  <p>App is working.</p>
+  <body>
+  <div class="app">
+
+    <!-- Header / Balance Card -->
+    <div class="header">
+      <h2>Welcome, Ibrahim</h2>
+      <div class="balance">₦125,450.00</div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions">
+      <div class="action">
+        💸<span>Transfer</span>
+      </div>
+      <div class="action">
+        📱<span>Airtime</span>
+      </div>
+      <div class="action">
+        💡<span>Bills</span>
+      </div>
+      <div class="action">
+        🧾<span>VTU</span>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="transactions">
+      <h3>Recent Transactions</h3>
+
+      <div class="transaction">
+        <div class="left">VTU Purchase</div>
+        <div class="right debit">- ₦2,500</div>
+      </div>
+
+      <div class="transaction">
+        <div class="left">Wallet Funding</div>
+        <div class="right credit">+ ₦20,000</div>
+      </div>
+
+      <div class="transaction">
+        <div class="left">Transfer to John</div>
+        <div class="right debit">- ₦5,000</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
 
   <!-- SERVICE WORKER -->
   <script>
